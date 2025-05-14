@@ -22,6 +22,6 @@ fn rocket() -> _ {
         login::login,
         verify::verify,
     ])
-    .mount("/site", FileServer::from(relative!("slu/dist")).rank(10))
+    .mount("/site", FileServer::from(relative!("www")).rank(10))
     .mount("/site", routes![site_handler::site_handler])
 }

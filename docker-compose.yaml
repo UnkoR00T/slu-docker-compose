@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - frontend-dist:/dist
+    command: sh -c "npm run build"
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    depends_on:
+      - frontend
+    volumes:
+      - frontend-dist:/app/www
+    environment:
+      - ROCKET_ENV=prod
+    ports:
+      - "8001:8001"
+    command: ./backend
+
+volumes:
+  frontend-dist:
