@@ -6,7 +6,10 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     volumes:
-      - frontend-dist:/dist
+      - ./frontend/dist:/app/dist
+    environment:
+      - VITE_MAIN_SSO=https://sso.joltamp.pl
+      - VITE_MAIN_BACKEND=
     command: sh -c "npm run build"
 
   backend:
@@ -16,11 +19,14 @@ services:
     depends_on:
       - frontend
     volumes:
-      - frontend-dist:/app/www
+      - ./frontend/dist:/app/www
     environment:
       - ROCKET_ENV=prod
+      - ROCKET_ADDRESS=0.0.0.0
+      - ROCKET_PORT=8000
+      - JWT_SECRET=JQWtt4NvvE20nvKfHAWcTmkQ5q9KlkK1IrQjSTLDYUOjpohmN4
     ports:
-      - "8001:8001"
+      - "8001:8000"
     command: ./backend
 
 volumes:
