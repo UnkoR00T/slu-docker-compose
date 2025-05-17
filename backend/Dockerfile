@@ -10,4 +10,5 @@ RUN apt-get update && \
 WORKDIR /app
 COPY --from=builder /app/target/release/backend .
 COPY --from=builder /app/www ./www
+EXPOSE 8000
 CMD ["./backend"]
